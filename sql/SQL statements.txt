@@ -1,0 +1,130 @@
+CREATE TABLE Game (
+    Game_id INT NOT NULL AUTO_INCREMENT,
+    Date DATETIME NOT NULL,
+    HomeTeam_id INT(11) NOT NULL,
+    AwayTeam_id INT(11) NOT NULL,
+    Stadium_id INT(11) NOT NULL,
+    Attendance INT NOT NULL,
+    PRIMARY KEY (Game_id),
+    FOREIGN KEY (HomeTeam_id) REFERENCES Team(Team_id),
+    FOREIGN KEY (AwayTeam_id) REFERENCES Team(Team_id),
+    FOREIGN KEY (Stadium_id) REFERENCES Stadium(Stadium_id)
+);
+
+USE cnsa;
+ 
+CREATE TABLE InjuryReport (
+    InjuryReport_id INT NOT NULL AUTO_INCREMENT,
+    Player_id INT(11) NOT NULL,
+    Game_id INT(11) NOT NULL,
+    InjuryDetails TEXT NOT NULL,
+    Date DATETIME NOT NULL,
+    PRIMARY KEY (InjuryReport_id),
+    FOREIGN KEY (Player_id) REFERENCES player(player_id),  -- Assumes there is a Player table with Player_id
+    FOREIGN KEY (Game_id) REFERENCES Game(Game_id)         -- Assumes there is a Game table with Game_id
+);
+
+
+
+CREATE TABLE RecruitmentIncident (
+    Incident_id INT NOT NULL AUTO_INCREMENT,
+    player_id INT(11) NOT NULL,
+    Description TEXT NOT NULL,
+    Date DATETIME NOT NULL,
+    PRIMARY KEY (Incident_id),
+    FOREIGN KEY (player_id) REFERENCES player(player_id)  -- Assumes there is a Player table with Player_id
+);
+
+CREATE TABLE RecruitmentIncident (
+    Incident_id INT NOT NULL AUTO_INCREMENT,
+    player_id INT(11) NOT NULL,
+    Description TEXT NOT NULL,
+    Date DATETIME NOT NULL,
+    PRIMARY KEY (IncidentID),
+    FOREIGN KEY (player_id) REFERENCES player(player_id)  -- Assumes there is a Player table with Player_id
+);
+USE cnsa;
+ 
+CREATE TABLE AwayTeam (
+    AwayTeam_id INT NOT NULL AUTO_INCREMENT,
+    Team_id INT(11) NOT NULL,
+    PRIMARY KEY (AwayTeam_id),
+    FOREIGN KEY (Team_id) REFERENCES Team(Team_id)
+);
+USE cnsa;
+ 
+CREATE TABLE HomeTeam (
+    HomeTeam_id INT NOT NULL AUTO_INCREMENT,
+    Team_id INT(11) NOT NULL,
+    PRIMARY KEY (HomeTeam_id),
+    FOREIGN KEY (Team_id) REFERENCES Team(Team_id)
+);
+
+CREATE TABLE Roster ( Team_id INT(11) NOT NULL, SeasonNo INT(11) NOT NULL, player_id INT(11) NOT NULL, FOREIGN KEY (Team_id) REFERENCES Team(Team_id), FOREIGN KEY (Player_id) REFERENCES Player(player_id) );
+
+CREATE TABLE SchoolRank ( schoolRank_id INT PRIMARY KEY, school_id INT, FOREIGN KEY (School_id) REFERENCES cnsa.School(School_id) );
+
+
+CREATE TABLE School ( School_id INT(11) NOT NULL AUTO_INCREMENT, Name VARCHAR(255) NOT NULL, Location VARCHAR(255) NOT NULL, Population INT(11) NOT NULL, SchoolType VARCHAR(100) NOT NULL, PRIMARY KEY (School_id) );
+USE cnsa;
+ 
+CREATE TABLE Team (
+    Team_id INT(11) NOT NULL AUTO_INCREMENT,
+    School_id INT(11) NOT NULL,
+    Coach_id INT(11) NOT NULL,
+    TeamManager_id INT(11) NOT NULL,
+    PRIMARY KEY (Team_id),
+    FOREIGN KEY (School_id) REFERENCES School(School_id),
+    FOREIGN KEY (Coach_id) REFERENCES Coach(Coach_id),
+    FOREIGN KEY (TeamManager_id) REFERENCES TeamManager(TeamManager_id)
+);
+
+USE cnsa;
+CREATE TABLE ProvincialOrganization (
+    ProvincialOrganization_id INT(11) NOT NULL AUTO_INCREMENT,
+    Name VARCHAR(128) NOT NULL,
+    Location VARCHAR(128) NOT NULL,
+    PRIMARY KEY (ProvincialOrganization_id)
+);
+
+USE cnsa;
+ 
+CREATE TABLE Stadium (
+  Stadium_id INT(11) NOT NULL AUTO_INCREMENT,
+  Name VARCHAR(128) NOT NULL,
+  Location VARCHAR(128) NOT NULL,
+  MaximumAttendance INT(11) NOT NULL,
+  PRIMARY KEY (Stadium_id)
+);
+USE cnsa;
+ 
+CREATE TABLE TeamManager (
+  TeamManager_id INT(11) NOT NULL AUTO_INCREMENT,
+  FirstName VARCHAR(128) NOT NULL,
+  LastName VARCHAR(128) NOT NULL,
+  Sex VARCHAR(1) NOT NULL,
+  Telephone VARCHAR(10) NOT NULL,
+  StreetAddress VARCHAR(50) NOT NULL,
+  PRIMARY KEY (TeamManager_id)
+);
+
+USE cnsa;
+
+DROP TABLE IF EXISTS Scholarship;
+
+CREATE TABLE Scholarship (
+    Scholarship_id INT NOT NULL AUTO_INCREMENT,
+    Player_id INT(11) NOT NULL,
+    Amount DECIMAL(10,2) NOT NULL,  -- Assuming monetary values, DECIMAL type is used
+    ScholarshipTerms TEXT NOT NULL,
+    School_id INT(11) NOT NULL,
+    PRIMARY KEY (Scholarship_id),
+    FOREIGN KEY (Player_id) REFERENCES player(player_id),  -- Assumes a Player table with player_id
+    FOREIGN KEY (School_id) REFERENCES School(School_id)   -- Assumes a School table with School_id
+);
+
+
+CREATE TABLE Coach ( Coach_id INT(11) NOT NULL AUTO_INCREMENT, FirstName VARCHAR(128) NOT NULL, LastName VARCHAR(128) NOT NULL, Sex VARCHAR(1) NOT NULL, Telephone VARCHAR(15) NOT NULL, StreetAddress VARCHAR(255) NOT NULL, PRIMARY KEY (Coach_id) ); 
+
+
+
